@@ -1,0 +1,56 @@
+.square{
+  height: 700px;
+  //width: 1000px;
+  border: 2px solid #0c0c0c;
+  background-color: #d9d7d7;
+}
+
+.entraceA{
+  margin-top: 320px;
+  display: flex;
+  align-items: center;
+}
+
+.entraceC{
+  margin-top: 320px;
+}
+
+.slot{
+  border: 2px solid #0c0c0c;
+  height: 150px;
+  width: 61px;
+  //margin-top: 70%;
+}
+
+.row-parking{
+  margin-top: 8%;
+}
+
+.color{
+  background-color: #2f855a;
+}
+
+.carImage{
+  margin-right: 3px;
+}
+.carImage > img {
+  min-width: 88px;
+  min-height: 75px;
+}
+
+[type=radio] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* IMAGE STYLES */
+[type=radio] + img {
+  cursor: pointer;
+}
+
+/* CHECKED STYLES */
+[type=radio]:checked + img {
+  outline: 2px solid #f89797;
+}

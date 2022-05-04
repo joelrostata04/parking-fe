@@ -1,0 +1,144 @@
+<div class="">
+  PARKING XYZ
+  <br/>
+  <div class="col-md-12 col-12 row m-auto">
+    <div class="col-1 col-md-1 text-center">
+      <button type="button" class="btn btn-primary btn-lg entraceA"
+      (click)="openModalA(entrance)">Entrance A</button>
+    </div>
+    <div class="square col-md-10 col-10">
+      <div class="row text-center col-md-12 col-12">
+        <div *ngFor="let lp of largeParking" class="row-parking">
+          <button class="slot" [disabled]="lp.isAvailable === 1"
+                  (click)="openExitCar(lp)"
+               [style.background-color]="lp.isAvailable === 1? 'green':'red'"
+               [style.margin-left]="lp.slotId.includes('1')? '68px' : '2px'">
+            <span style="font-weight: bold">{{lp.slotId}}</span>
+          </button>
+        </div>
+      </div>
+      <div class="row text-center col-md-12 col-12">
+        <div *ngFor="let mp of midParking" class="mt-2">
+          <button class="slot" [disabled]="mp.isAvailable === 1"
+                  (click)="openExitCar(mp)"
+               [style.background-color]="mp.isAvailable === 1? 'green':'red'"
+               [style.margin-left]="mp.slotId.includes('1')? '68px' : '2px'">
+            <span style="font-weight: bold">{{mp.slotId}}</span>
+          </button>
+        </div>
+      </div>
+      <div class="row text-center col-md-12 col-12">
+        <div *ngFor="let sp of smallParking" class="mt-2">
+          <button class="slot" [disabled]="sp.isAvailable === 1"
+                  (click)="openExitCar(sp)"
+               [style.background-color]="sp.isAvailable === 1? 'green':'red'"
+               [style.margin-left]="sp.slotId.includes('1')? '68px' : '2px'">
+            <span style="font-weight: bold">{{sp.slotId}}</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="col-1 col-md-1">
+      <button type="button" class="btn btn-primary btn-lg entraceC"
+              (click)="openModalC(entrance)">Entrance C</button>
+    </div>
+    <div class="col-md-12 text-center">
+      <br/>
+      <button type="button" class="btn btn-primary btn-lg"
+              (click)="openModalB(entrance)">Entrance B</button>
+    </div>
+  </div>
+</div>
+
+<ng-template #entrance let-modal>
+  <div data-backdrop="static">
+    <div class="modal-header">
+      <h4 class="modal-title">Size of Car and Plate Number</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()">X</button>
+    </div>
+    <div class="modal-body">
+      <div class="row justify-content-center" ngbRadioGroup name="car-radio" [(ngModel)]="carSize">
+        <label ngbButtonLabel class="carImage">
+          <input ngbButton type="radio" name="car" [value]="small">
+          <img src="assets/images/small.png" style="padding: 15px">
+        </label>
+        <label ngbButtonLabel class="carImage">
+          <input ngbButton type="radio" name="car" [value]="mid" >
+          <img   src="assets/images/Mid.png" style="padding: 10px">
+        </label>
+        <label ngbButtonLabel class="carImage">
+          <input ngbButton type="radio" name="car" [value]="large">
+          <img  src="assets/images/Large.png" style="padding: 5px">
+        </label>
+      </div>
+    </div>
+    <div>
+      <h5>Plate Number</h5>
+      <input type="text" class="form-control"
+             [(ngModel)]="plateNumber" [maxLength]="15" id="plateNumber">
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-primary" [disabled]="!plateNumber" (click)="carEntryRequest()">Ok</button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #parking let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Here's the nearest slot for you</h4>
+<!--    <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()">X</button>-->
+  </div>
+  <div class="modal-body">
+    <div class="row justify-content-center" ngbRadioGroup name="slot-radio"-00000000000000000000000000000000oikllllllllllll [(ngModel)]="carSlotId">
+      <label ngbButtonLabel *ngFor="let slot of slotAvailableForCar">
+        <input ngbButton type="radio" name="slot" [value]="slot.slotId">{{slot.slotId}}
+      </label>
+    </div>
+  </div>
+  <div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="carParkRequest()">Ok</button>
+  </div>
+</ng-template>
+
+<ng-template #exitingModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Exit</h4>
+  </div>
+  <div class="modal-body">
+    <div class="row justify-content-center">
+      <h3>Exit?</h3>
+    </div>
+  </div>
+  <div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="exitCar()">Yes</button>
+    <button type="button" class="btn btn-primary" (click)="reset()">No</button>
+  </div>
+</ng-template>
+
+<ng-template #greetingModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Thank you for parking with us</h4>
+  </div>
+  <div class="modal-body">
+    <div class=" row justify-content-center">
+      <h3>Plate Number: {{this.exitingGreeting}}</h3>
+    </div>
+    <div class="row justify-content-center">
+      <label>Duration of Parking: </label>
+      <p class="font-weight-bold"> {{this.parkDuration}} Hour(s)</p>
+    </div>
+    <div class="row justify-content-center">
+    <label>Cost of Parking: </label>
+    <p class="font-weight-bold"> {{this.priceToPay}}</p>
+  </div>
+  </div>
+  <div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="modal.close()">Okay</button>
+  </div>
+</ng-template>
